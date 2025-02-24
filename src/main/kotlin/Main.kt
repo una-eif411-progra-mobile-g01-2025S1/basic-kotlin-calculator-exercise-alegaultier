@@ -1,16 +1,59 @@
 package org.example
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-fun main() {
-    val name = "Kotlin"
-    //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-    // to see how IntelliJ IDEA suggests fixing it.
-    println("Hello, " + name + "!")
+import java.lang.Exception
 
-    for (i in 1..5) {
-        //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-        // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-        println("i = $i")
+fun numberValidation(): Double{
+    try {
+        return readln().toDouble()
+    } catch (_: Exception){
+        print("El valor ingresado no es válido, ingrese un valor válido: ")
+        return numberValidation()
+    }
+}
+
+fun inputNumber(variable: String): Double{
+    print("Ingrese el valor para $variable: ")
+    return numberValidation()
+}
+
+fun interfaceMenu(): Double{
+    println("+-+-+-+-+-[CALCULADORA]-+-+-+-+-+")
+    println("   1. Suma")
+    println("   2. Resta")
+    println("   3. Multiplicación")
+    println("   4. División")
+    println("   0. Salir")
+    println("+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+")
+    print(" --> ")
+    return numberValidation()
+}
+
+fun main() {
+    val calculator = Calculator()
+
+    while (true){
+        val option = interfaceMenu()
+
+        if(option == 0.0){
+            break
+        }
+
+        val a = inputNumber("A")
+        val b = inputNumber("B")
+
+        when(option){
+            1.0 -> println("$a + $b = " + calculator.add(a,b))
+            2.0 -> println("$a - $b = " + calculator.subtract(a,b))
+            3.0 -> println("$a * $b = " + calculator.multiply(a,b))
+            4.0 -> {
+                try{
+                    println("$a / $b = " + calculator.divide(a,b))
+                } catch (e: ArithmeticException){
+                    println(e.message)
+                }
+            }
+        }
+
+
     }
 }
